@@ -18,8 +18,10 @@ export async function getHomeDir(): Promise<string> {
 }
 
 export async function getWorkDirName(unixTime: string): Promise<string> {
-  const homeDir = await getHomeDir();
-  const workDirName = path.join(homeDir, `actions_github_pages_${unixTime}`);
+  // const homeDir = await getHomeDir();
+  const githubWorkspace = `${process.env.GITHUB_WORKSPACE}`;
+  core.debug(`githubWorkspace: ${githubWorkspace}`);
+  const workDirName = path.join(githubWorkspace, `actions_github_pages_${unixTime}`);
   return workDirName;
 }
 
