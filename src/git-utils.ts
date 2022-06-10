@@ -6,7 +6,7 @@ import fs from 'fs';
 import {URL} from 'url';
 import {Inputs, CmdResult} from './interfaces';
 import {createDir} from './utils';
-import {cp, rm} from 'shelljs';
+import {cp, mv, rm} from 'shelljs';
 
 export async function createBranchForce(branch: string): Promise<void> {
   await exec.exec('git', ['init']);
@@ -57,7 +57,8 @@ export async function copyAssets(
   }
 
   core.info(`[INFO] copy ${publishDir} to ${destDir}`);
-  cp('-RfL', [`${publishDir}/*`, `${publishDir}/.*`], destDir);
+  // cp('-RfL', [`${publishDir}/*`, `${publishDir}/.*`], destDir);
+  mv([`${publishDir}/*`, `${publishDir}/.*`], destDir);
 
   await deleteExcludedAssets(destDir, excludeAssets);
 
